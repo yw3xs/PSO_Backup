@@ -1,0 +1,2 @@
+Function Dim. Target Wanted_error Nb_of_runs Mean_eval._nb Std_dev Success_rate Min_eval Max_eval Mean_swarm Mean_error Std_dev Mean_error_cont Std_dev Min_error Max_error Duration
+ 3  2 0.000 0.0000100000 100 133 62 1.000 1 278    5  0.0000036408  0.0000033166 74.3425303925  161.7153558596 0.0000000000  0.0000097882  / Time 0.0000

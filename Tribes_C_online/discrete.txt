@@ -1,0 +1,23 @@
+1
+
+2
+42
+  0.009 0.0095 0.0104 0.0118 0.0128 0.0132
+  0.014 0.0150 0.0162 0.0173 0.0180 0.0200
+  0.023 0.0250 0.0280 0.0320 0.0350 0.0410
+  0.047 0.0540 0.0630 0.0720 0.0800 0.0920
+  0.105 0.1200 0.1350 0.1480 0.1620 0.1770
+  0.192 0.2070 0.2250 0.2440 0.2630 0.2830
+  0.307 0.3310 0.3620 0.3940 0.4375 0.5000
+
+---------------------------
+This data file is for discrete variable whose acceptable value
+can't be computed just by giving min, max and granularity)
+
+<discrete_nb> Number of discrete variables
+
+The following data are for each discrete variable
+
+<discrete_rank> Rank of the  variable in [0, D-1]
+<discrete_val_nb>  Number of values
+<discrete>* List of values

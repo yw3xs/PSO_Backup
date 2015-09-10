@@ -1,0 +1,35 @@
+Strategies to use (cf. problems.txt)
+
+Normal problem: 12 12 12 1
+or			: 18 18 18 1
+Difficult problem: 21 21 21 21
+(Partly) combinatorial problem: 21 21 21 21
+
+
+
+case 0: // Around p_i OR around p_g
+case 1: // Mixture "around p_i" "around p_g". The best compromise
+case 2: // Mixture "around x" "around p_i" "around p_g"
+case 3: // Try to find promising areas (center and radius) and choose one at random
+case 4: // Mixture "around p_i" "around p_g" and "particle previous move"
+case 5: // Mixture "around p_i" "around p_g" and "particle previous move"
+
+case 9: // "Classical PSO". Mixture "around p_i" "around p_g" and "particle previous move"
+            // with hyperparallelepids
+case 10:  // Keep moving. Neighbours are not taken into account.
+case 11:   // Go back.   Neighbours are not taken into account.
+case 12: // Mixture "around p_i" "around p_g" + noise on position
+case 13: // As 1, noise on function evaluation will be added after
+case 14: // Mixture "around p_i" "around p_g" , using Direct Gaussian distribution
+case 15: // Mixture "around p_i" "around p_g" , "around x", using Direct Gaussian distribution (pivot method)
+case 16: // Mixture "around p_i" "around p_g" , "around x",
+            //pivot method (using Direct Gaussian distribution if nonunif<0)
+case 17:  // Simplified mixture (x,p_i,p_g)
+case 18:  // Pivot method with hyperspheres
+case 19: // Pivot method with mixture "around p_i" "around pivot"
+case 20: // Semi-hypersphere in direction x(t-1)->x(t), centered on x
+case 21: // Hyperparallelepids, for problems with non null granularity
+			// Gaussian on each dimension
+case 22: // Hyperparallelepids, for problems with non null granularity
+			// Intervals
+

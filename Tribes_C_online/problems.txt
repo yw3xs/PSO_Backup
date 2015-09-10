@@ -1,0 +1,850 @@
+1 1 12 21
+1 1 1 1
+0
+0
+  0
+0
+0
+
+1
+
+
+ 1 3
+30
+30 -20 20 0
+0
+0 0.00001
+0
+0 0 100
+-40000 -40000 -1
+
+--------------
+Put the problem parameter set(s) BEFORE this line. See examples below
+If you want to run several problems, precise how many
+(very first number after the strategy set) >
+WARNING.  A multiojective problem has  to be ran alone
+( some pb with the run.txt and run_cleaned.txt files)
+
+DATA FORMAT
+
+
+------
+  <strategy set>  Just for test purpose. Will be hard coded, later.
+4 integers = 4 strategies,
+
+strategy 1 is for "bad" particles
+ strategy 2 for "normal" ones
+ strategy 3 for "good" ones
+ strategy 4 for "excellent" ones
+
+For most of problems, the set (1 1 12 21) seems quite good
+You may also try  (1 1 12 25) (1 1 12 12)
+or simply  (23 23 23 23)   or even (25 25 25 25) for some particular cases
+
+For hybrid problems, you may use (21 21 21 21) (independent gaussian distributions)
+(9 9 9 9) is also not bad, but needs the hard coded phi parameter
+------
+<nonunif set>
+ 4 floats = 4 nonunif coefficients, one for each strategy.
+
+nonunif coeffs are for distributions of possibilities.
+
+  1 => uniform distribution
+
+ If a nonunif coeff is # 1, for the corresponding strategy,
+ the distribution is not uniform
+ (see rand_in_hypersphere()).
+
+ if nonunif<0 => Gaussian distribution. Standard deviation = -nonunif
+
+nonunif = (1 1 1 1) is often OK
+------
+<confin_interv> If <0, no interval (boundary) confinement
+
+------
+ <circular_hood> If >0, it is the size of a circular neighbourhood. Then tribes and i-groups are not
+       taken into account Mainly useful for comparison.
+       For example, by setting it at 3, using always strategy 9, and a constant swarm size (see below)
+       you obtain the classical "constricted PSO".
+
+       If <-1, it means "choose a random i-group whose size is -circular_hood"
+	   If =-1, "choose a random i-group whose size is (2/N)*ln(eps)/ln(1-1/N)". N=swarm size
+
+------
+ <no_best>  0, normal best neighbour
+   1, the "best neighbour" is in fact chosen at random
+			2, use pseudo gradient to define the "best" informer
+			3
+
+
+------
+<adapt>  If 0, complete adaptive method
+
+		 If >0, it is in fact the constant swarm size used for the non adaptive method
+
+------
+<linkreorg> Use (1) or not (0) information link reorganization
+
+------
+<nb_pb_max> Number of different problems to solve
+
+------
+------
+<nb_f> number of objective functions to simultaneously optimize
+         (needed for multiobjective optimization)
+         if <0, use lexicographical order.
+
+------
+<function_code>  (see functions.txt or, to be sure, myfunction.c)
+
+     if <0, it means that fuzzification has to be used. The real function code is then abs(function_code)
+------
+<dimension >
+(use <n> times <xmin  xmax  granularity (0 if continuous)>)*
+
+* you can have several lines like this one, for you can have different granularities
+along different dimensions
+Be SURE that the sum of the all n values is equal to the total dimension
+
+If granularity <0, the problem is seen as a special binary one.
+In that case, be sure xmin>-0.5 and xmax<1.5
+------
+<constrain> For special constraint cases. Usually 0. See constrain.c
+
+			1 for special list of discrete values on the file discrete.txt
+------
+<target>  Warning. For  a multiobjective problem
+							 "target" is only for the first function
+------
+<precision>
+------
+< all components of the solution must be different (1), or not necessary (0)>
+------
+<print_level>
+------
+< save >    1 => save swarm on swarm.txt
+                >1 => save also some data on trace.txt
+                In any case, see run.txt for result
+				-1 => save energies on energy.txt
+			-2 => save the number of evaluations and the best result on file trace_run.txt
+			     (in order to plot the convergence curve)
+------
+
+<number of runs>
+------
+<Max_Eval>  Max number of clock ticks if >0. If <0, the absolute value is the max number of evaluations
+----
+<Max_Eval_2> Second "max number" if you want a whole sequence
+<Max_Eval_delta> Step from Max_Eval to Max_Eval_delta
+----
+if function_code==68 (binary multimodal)
+<number_of_peaks>
+
+ ============ Examples you can copy/paste at the beginning of this file
+ DO NOT copy/paste the name nor the comment (first text line(s) )
+
+1) DD-sum (sum=200 with 10 different integers in [1,100])
+Best parameters for classical PSO (strategy 9): hood 3, size 9
+1 1
+10
+10 1 100 1
+0
+200 0.1
+1
+
+0 0 20
+-10000 -10000 -1
+
+
+2)   DD-product
+
+3) Parabola (Sphere)
+ 1 3
+30
+30 -20 20 0
+0
+0 0.00001
+0
+0 0 100
+-40000   -40000 -1
+
+
+
+
+4) Rosenbrock
+ 1 4
+30
+30 -10 10 0
+0
+0 0.00001
+0
+0 0 100
+-40000  -40000 -1
+
+
+5) Alpine
+1 5
+10
+10 -10 10 0
+0
+0 0.00001
+0
+0 0 100
+-15000 -15000 -1
+
+
+6) Griewank nD, n>2  (min 0 en (100, ... 100))
+ 1 6
+30
+30 -300 300 0
+0
+0 0.00001
+0
+0 0 100
+-40000 -40000 -1
+
+7) Rastrigin
+1 7
+30
+30 -5.12 5.12 0
+0
+0 0.0000
+0
+0 0 50
+-20000 -20000 -1
+
+8) Fifty_fifty (non combinatorial)
+with fuzzification
+1 -8
+
+
+20
+20 1 100 1
+0
+0 0.01
+1
+0 0 10
+ -1000  -1000 -1
+
+9) Ackley
+
+1 9
+30
+30 -30 30 0
+0
+0 0.00001
+0
+0 0 100
+-40000   -40000 -1
+
+
+
+ 10) Foxholes (with fuzzification)
+1 -10
+2
+2 -50 50 0
+
+0
+0 0.998004
+0
+0 0 10
+-40000   -40000 -1
+
+
+
+11) Apple trees
+1 11
+3
+3 0 1 0
+0
+1 0.1
+0
+0 0 1
+-200   -200 -1
+
+12) El Farol problem. 100 Irishmen => best solution = 30 at the pub (function value = 15)
+after about 50 evaluations
+Note that  if the problem is considered as not combinatorial,
+it is more difficult to find a solution
+
+1 12
+100
+100 0 1 1
+0
+15 0.000001
+0
+1 0 1
+-40000 -40000 -1
+
+13)    Fermat    (find, for example (3,4,5), (24,32,40), (84,13,85) etc.)
+1 13
+3
+
+3 2 100 1
+0
+0 0.01
+0
+1 0 4
+-40000    -40000 -1
+
+
+14)    Knap_sack (10 different integer numbers in [1,100] whose sum is equal to 100
+
+See also DD-sum
+1 14
+10
+10 1 100 1
+0
+100 0.01
+1
+0 0 20
+-500  -500 -1
+
+15)
+
+16)
+
+17)
+
+18)   2D Linear_system
+1 18
+3
+3 -3 3 0.001
+0
+
+0 0.001
+0
+1 0 1
+-40000  -40000 -1
+
+19)
+
+
+20)
+
+21)   Magic square (3x3) (different integer numbers of [1,100])
+  You can also try 16 (4x4), 25 is still possible ... if you are lucky
+1 21
+9
+9 1 100 1
+0
+0 0.001
+1
+0 0 10
+-10000 -10000 -1
+
+22)    Model tuning
+Note: hard coded in myfunction.c. Currently, the target is in fact 1918.95
+for (10.073 1.786)
+ 1 22
+2
+1 1 100 0.00
+1 1  2  0.00
+0
+0  0.001
+0
+0 0 10
+-5000   -5000 -1
+
+
+
+23)    Master Mind  (solution (1,2,3,4) hard coded in myfunction.c)
+  Just for fun: it is very bad. You should use my "ultimate" unbeatable MasterMind program ;-)
+1 23
+4
+4 1 6 1
+0
+0 0.001
+0
+1 0 1
+-1000    -1000 -1
+
+
+24) Catalan's conjecture
+1 24
+4
+1 2 30 1
+1 2 10 1
+1 2 30 1
+1 2 10 1
+
+0
+0 0.001
+0
+0 0 10
+ -40000  -40000 -1
+
+25) //
+
+26)
+
+27)   //
+
+28)
+
+
+29) Cognitive harmony
+Note: need to have the matrix in matrix.txt
+
+1  29
+6
+6 0 1 0
+0
+24 0.001
+0
+0 0 100
+-1000   -1000 -1
+
+
+30) Non specific TSP (just for test). You should use PSO_for_TSP
+
+
+
+You need the file tsp_br17 for this problem
+You should find a solution after about 2000 evaluations
+Note the granularity set to 1
+and also the option all_different
+
+1 30
+17
+17    0.0 16 1
+0
+39.0 0.9
+1
+1 0 5
+-10000 -10000 -1
+
+With tsp_4
+1 30
+4
+4    0.0 3 1
+0
+4 0.9
+1
+1 0 10
+-10 -10 -1
+
+With tsp_6
+
+1 30
+6
+
+6    0.0 5 1
+0
+6 0.9
+1
+1 0 10
+-20 -20 -1
+
+31)  Sum of absolute values. You can use it with granularity = 1 (integer problem)
+
+1 31
+5
+5    -100 100 1
+0
+0 0.1
+0
+0 0 1
+
+-40000 -40000 -1
+
+32) Non specific QAP
+(use data file qap_scr12)
+1 32
+12
+12    0 11 1
+0
+31410.0 0.9
+1
+0 0 10
+-5000 -5000 0
+
+33) Multiobjective Lis-Eiben 1
+Each run gives a point  whose (f1,f2) is near of the Pareto front
+See result in run.txt. (f1,f2) are in the Error columns
+2 33
+2
+2  0 1 0
+0
+0 0.001
+0
+0 0 200
+-20  -20 -1
+
+34) Multiobjective Schaffer
+2 34
+2
+2  -5 10 0
+0
+0 0.001
+0
+0 0 200
+-20  -20 -1
+
+
+35)    Multiobjective F1
+ 2 35
+2
+2  0 1 0
+0
+0 0.001
+0
+0 0 200
+
+-20   -20 -1
+
+36)      Multiobjective F2
+
+2 35
+2
+2  0 1 0
+0
+0 0.001
+0
+0 0 200
+-20   -20 -1
+
+37)    Multiobjective F3        (simple front)
+
+
+38)  Multiobjective F4          (convex, concave)
+
+39)   Multiobjective F5    (5 Pareto fronts)
+2 39
+2
+2  0 1 0
+0
+0 0.001
+0
+0 0 300
+-100   -100 -1
+
+40)    Multiobjective F6
+
+41)  Multiobjective Coello F3
+
+42)
+
+
+
+43)
+
+44) Jeannet-Messine (cf ROADEF 2003 proceedings p 273)
+  min -112.5   in position (3,-7.5, 10)
+  The authors define 5 different methods, and
+their best result is: 3271 evaluations
+1 44
+3
+1 0 5 1
+1 -15 25 0
+1 3 10 0
+0
+-112.5 0.000001
+0
+0 0 10
+-2000  -2000 -1
+
+
+45)   MINLP X. Yan
+ 2 45
+72
+36 0 1 1
+12 0 600 0
+12 0 400 0
+12 0 200 0
+
+0
+0 0.01
+0
+1 0 2
+-100000  -100000 -1
+
+
+
+46) Tripod (Louis Gacogne)
+on [-100, 100]^2, min 0 at (0,-50)
+Seems simple but it is in fact difficult
+to obtain a success rate > 50%
+Strategies 1 1 12 21 => success rate=52%
+Strategies 1 1 1 1 => 64%
+
+1 46
+
+2
+2 -100 100 0
+0
+0 0.00001
+0
+0  0 100
+-40000  -40000 -1
+
+
+
+ (Compare with strategies 1 1 1 1)
+
+ 47) Tripod, with circular constraint, and multiobjective optimization
+2 47
+2
+2 -100 100 0
+0
+0 0.001
+0
+0  0 10
+-3000 -3000 -1
+
+ 48) DeJong f4
+1 48
+30
+30 -20 20 0
+0
+0 0.0000
+0
+0 0 50
+-20000  -20000 -1
+
+49) Pressure vessel
+1 49
+4
+
+1 1.125 12.5 0.0625
+1 0.625 12.5 0.0625
+2 0.01 240 0
+0
+0 0.0
+0
+0 0 100
+-51818  -51818 -1
+
+
+50) Coil compressing spring
+
+   Note the constrain=1 (see constrain.c) for discrete values list
+1 50
+3
+1 1.0 70.0 1
+1 0.6 3.0 0.0
+1 0.2 0.5 0.0
+1
+0 0.0
+0
+0 0 100
+-12500  -12500 -1
+
+51) Gear train
+
+1 51
+4
+4 12 60 1
+
+0
+0 0.0
+0
+0 0 100
+-19800    -19800 -1
+
+52) Pressure vessel as multiobjective
+4 52
+4
+1 1.125 12.5 0.0625
+1 0.625 12.5 0.0625
+2 0.01 240 0
+
+0
+0 0.0
+0
+0 0 100
+-51818    -51818 -1
+
+
+53) Coil compressing spring as multiobjective
+   Note the constrain=1 (see constrain.c) for discrete values list
+6 53
+
+3
+1 1.0 70.0 1
+1 0.6 3.0 0.0
+1 0.2 0.5 0.0
+1
+0 0.0
+0
+0 0 100
+-12500 -12500 -1
+
+
+
+54)
+
+
+55) Neural Network Training. XOR
+1 55
+9
+9 -30 30 0
+0
+
+0 0.001
+
+0
+0 0 30
+-40000   -40000 -1
+
+56)Neural Network Training. 4 bit parity
+1 56
+25
+25 -100 100 0
+0
+0 0.001
+0
+0 0 30
+-40000   -40000 0
+
+57) Neural Network Training. Three Color Cube
+1 57
+46
+46 -100 100 0
+0
+0 0.001
+0
+0 0 30
+-40000 -40000 -1
+
+58) Neural Network Training. Diabetes in Pima Indians
+1 58
+64
+64 -100 100 0
+0
+
+0 0.001
+0
+0 0 30
+-40000  -40000 -1
+
+59) Neural Network Training. Sin Times Sin
+1 59
+26
+26 -100 100 0
+0
+0 0.001
+0
+0 0 30
+-40000 -40000 -1
+
+60) Neural Network Training. Time Servomechanism
+1 60
+28
+28 -100 100 0
+0
+0 0.001
+0
+0 0 30
+-40000 -40000 -1
+
+61) Move Peaks
+	Warning. Some parameters are in fact hard coded (see movpeaks_mc.c)
+	Also, the interval of values must be the same for all dimensions
+1 61
+5
+5 0 100 0
+0
+0 0.00001
+0
+0 0 50
+-500000  -500000 -1
+
+62) Goldberg�s order 3 deceptive problem
+	For such a problem, strategy set 1 12 12 21 may be better
+	Note the granularity set to -1 (special biary problem)
+
+1 62
+60
+60 0 1.4999 -1
+0
+0 0.00001
+0
+0 0 10
+-100000 -100000 -1
+
+63) M�hlenbein's order 5,
+   15 binary string
+   seen as a 1D problem
+1 12 21 21
+1 1 1 1
+0
+0
+  0
+0
+0
+
+1
+
+1 63
+1
+1 0 32767 1
+0
+0 0.01
+0
+0 0 1
+-40000 -40000 -1
+
+64) Schaffer's f6
+1 1 12 21
+1 1 1 1
+0
+0
+  0
+0
+0
+
+1
+
+1 64
+2
+2 -100 100 0
+0
+0 0.00
+0
+0 0 1
+-40000  -40000 -1
+
+68) Binary. Multimodal (D=100, 20 peaks)
+ 1 68
+100
+100 0 1 1
+0
+0 0.000
+0
+0 0 100
+-1000 -20000 -1000
+20
+
+ =======================================  to test
+ use data file tsp_x50.1      (solution <= 5.89)
+21 21 21 21
+1 1 1 1
+
+0
+0
+ 0 1
+30
+50
+50    0.0 49.0 1
+0
+0 0.01
+1
+1 0 2
+-1000000 -1000000 -1
+=================== current tests
+abs(sin(x) , abs(x)
+9 9 9 9
+
+1 1 1 1
+3
+0
+ 20 2
+99
+1
+1    1 10 0
+0
+0 0.00001
+0
+1 0 2
+-1000 -1000 -1
